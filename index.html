@@ -12,12 +12,13 @@
 </head>
 
 <body>
+    <!-- --------------------------------NavBar -->
     <nav class="navbar">
         <div class="navbar-center">
-            <span class="nav-icon>
-                <i class=" fas fa-ellipsis-v"></i>
+            <span class="nav-icon">
+                <i class=" fas fa-bars"></i>
             </span>
-            <img src="./images/logo.svg" alt="AyE Logo" />
+            <img src="./images/logoweb.png" alt="AyE Logo" />
             <div class="cart-btn">
                 <span class="nav-icon">
                     <i class="fas fa-shopping-cart"></i>
@@ -26,8 +27,59 @@
             </div>
         </div>
     </nav>
-    <!-- --------------------------------NavBar -->
     <!-- --------------------------------Final NavBar -->
+    <!-- --------------------------------Hero -->
+    <header class="hero">
+        <div class="banner">
+            <h1 class="banner-title">¡El mejor servicio 4ever!</h1>
+            <button class="banner-btn">Pide ahora!</button>
+        </div>
+    </header>
+    <!-- --------------------------------Final Hero -->
+    <!-- --------------------------------Productos -->
+    <section class="products">
+        <div class="section-title">
+            <h2>Nuestros Productos</h2>
+        </div>
+        <div class="products-center">
+            <!------------------------------- Producto único -->
+            <article class="product">
+                <div class="img-container">
+                    <img src="./images/product-1.jpeg" alt="Producto" class="product-img" />
+                    <button class="bag-btn" data-id="1">
+                        <i class="fas fa-shopping-cart"></i>
+                        Agregar al carrito
+                    </button>
+                </div>
+                <h3>Six Pack Poker</h3>
+                <h4>COP 14.000</h4>
+            </article>
+            <!----------------------- Final de producto único-->
+        </div>
+    </section>
+    <!-----------------------------------Final Productos -->
+
+
+    <!-----------------------------------------------Carrito -->
+    <div class="cart-overlay">
+        <div class="car">
+            <span class="close-cart">
+                <i class="fa fa-times-circle"></i>
+            </span>
+            <h2>Tu carrito</h2>
+        </div>
+        <div class="cart-content">
+            <!--------------------------- Items del carrito -->
+            <div class="cart-i">
+                <img src="./images/product-3.jpeg" alt="Producto agregado" />
+            </div>
+            <!----------------------Final Items del carrito -->
+        </div>
+    </div>
+    <!-----------------------------------------Final Carrito -->
+
+
+
     <!-- Javascript -->
     <script src="app.js"></script>
 </body>
