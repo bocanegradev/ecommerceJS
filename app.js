@@ -36,16 +36,49 @@ class Products {
     }
 }
 // Mostrando productos
+// Most of the methods
 class UI {
+    displayProducts(products) {
+        let result = "";
+        products.forEach(product => {
+            result += `
+            <article class="product">
+                <div class="img-container">
+                    <img src=${product.image} alt="Producto" class="product-img" />
+                    <button class="bag-btn" data-id=${product.id}>
+                        <i class="fas fa-shopping-cart"></i>
+                        Agregar al carrito
+                    </button>
+                </div>
+                <h3>${product.title}</h3>
+                <h4>COP ${product.price}</h4>
+            </article>`;
+        });
+        productsDOM.innerHTML = result;
+    }
 
+    getBagButtons() {
+        const buttons = [...document.querySelectorAll(".bag-btn")];
+        console.log(buttons);
+    }
 }
-//Locasl storage
+//Local storage
 class Storage {
-
+    // Guardando productos para la lista del carrito
+    static saveProducts(products) {
+        localStorage.setItem("products", JSON.stringify(products));
+    }
 }
+
+// Cargando los productos desde json
 document.addEventListener("DOMContentLoaded", () => {
     const ui = new UI();
     const products = new Products();
-    // Obteniendo todos los productos
-    products.getProducts().then(data => console.log(data));
-})
+    // Obteniendo todos los productos del json
+    products.getProducts().then(products => {
+        ui.displayProducts(products);
+        Storage.saveProducts(products);
+    }).then(() => {
+        ui.getBagButtons();
+    });
+});
