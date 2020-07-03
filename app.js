@@ -138,17 +138,54 @@ class UI {
         cartBtn.addEventListener("click", this.showCart);
         closeCartBtn.addEventListener("click", this.hideCart);
     }
+    populateCart(cart) {
+        cart.forEach(item => this.addCartItem(item));
+    }
     hideCart() {
         cartOverlay.classList.remove("transparentBcg");
         cartDOM.classList.remove("showCart");
     }
-    populateCart(cart) {
-        cart.forEach(item => this.addCartItem(item));
-    }
     cartLogic() {
         // Se hace de esta forma (=>) para poder acceder a los métodos de la clase
         clearCartBtn.addEventListener("click", () => this.clearCart());
+        // Cart functionality
+        cartContent.addEventListener("click", event => {
+            if (event.target.classList.contains("remove-item")) {
+                let removeItem = event.target;
+                let id = removeItem.dataset.id;
+                cartContent.removeChild(removeItem.parentElement.parentElement);
+                this.removeItem(id);
+            }
+            // Clase de los íconos para aumentar o disminuir cantidad de producto
+            else if (event.target.classList.contains("fa-plus-square")) {
+                let addAmount = event.target;
+                let id = addAmount.dataset.id;
+                let tempItem = cart.find(item => item.id === id);
+                tempItem.amount = tempItem.amount + 1;
+                // Actualizando el carrito en el almacenamiento local
+                Storage.saveCart(cart);
+                this.setCartValues(cart);
+                addAmount.nextElementSibling.innerText = tempItem.amount;
+            }
+            else if (event.target.classList.contains("fa-minus-square")) {
+                let lowerAmount = event.target;
+                let id = lowerAmount.dataset.id;
+                let tempItem = cart.find(item => item.id === id);
+                tempItem.amount = tempItem.amount - 1;
+                if (tempItem.amount > 0) {
+                    // Actualizando el carrito en el almacenamiento local
+                    Storage.saveCart(cart);
+                    this.setCartValues(cart);
+                    lowerAmount.previousElementSibling.innerText = tempItem.amount;
+                }
+                else {
+                    cartContent.removeChild(lowerAmount.parentElement.parentElement);
+                    this.removeItem(id);
+                }
+            }
+        });
     }
+
     clearCart() {
         let cartItems = cart.map(item => item.id);
         cartItems.forEach(id => this.removeItem(id));
@@ -158,6 +195,7 @@ class UI {
         }
         this.hideCart();
     }
+    // Eliminar el producto del carrito
     removeItem(id) {
         //Actualizando el carrito
         cart = cart.filter(item => item.id !== id);
