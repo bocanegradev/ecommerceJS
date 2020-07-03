@@ -12,6 +12,8 @@ const productsDOM = document.querySelector(".products-center");
 
 //-------------------------------------------Carrito principal
 let cart = [];
+//--------------------------------------------Botones principales
+let buttonsDOM = [];
 
 //-----------------------------------------------------Clases
 // Obteniendo los productos
@@ -59,7 +61,74 @@ class UI {
 
     getBagButtons() {
         const buttons = [...document.querySelectorAll(".bag-btn")];
-        console.log(buttons);
+        buttonsDOM = buttons;
+        buttons.forEach(button => {
+            let id = button.dataset.id;
+            let inCart = cart.find(item => item.id === id);
+            if (inCart) {
+                button.innerText = "Producto agregado";
+                button.disabled = true;
+            }
+            // else {
+            button.addEventListener("click", event => {
+                event.target.innerText = "Producto agregado";
+                event.target.disabled = true;
+                //-------- Obteniendo producto desde los productos
+                // (...) Convierte lo que obtiene en un objeto (?)
+                let cartItem = { ...Storage.getProduct(id), amount: 1 };
+                // console.log(cartItem);
+                //-------- Agregando producto al carrito
+                // Toma lo que tiene el carrito, y agrega un ítem al array
+                cart = [...cart, cartItem];
+                // console.log(cart);
+                //-------- Guardando carrito en local storage para acceder a él, incluso refrescando la página
+                Storage.saveCart(cart);
+                //-------- Cambiando valores carrito
+                this.setCartValues(cart);
+                //-------- Mostrando ítem en el carrito
+                this.addCartItem(cartItem);
+                //-------- Mostrando el carrito
+                this.showCart();
+            });
+            // }
+        });
+    }
+    setCartValues(cart) {
+        let tempTotal = 0;
+        let itemsTotal = 0;
+        // Acumulando valores del precio total
+        cart.map(item => {
+            tempTotal += item.price * item.amount;
+            itemsTotal += item.amount;
+        });
+        cartTotal.innerText = parseFloat(tempTotal.toFixed(2));
+        cartItems.innerText = itemsTotal;
+        // console.log(cartTotal, cartItems);
+    }
+    // Agregando productos a la liste de ítems
+    addCartItem(item) {
+        const div = document.createElement("div");
+        div.classList.add("cart-item");
+        div.innerHTML = `
+            <img src=${item.image} alt="Producto agregado" />
+            <div>
+                <h4>${item.title}</h4>
+                <h5>COP ${item.price}</h5>
+                <span class="remove-item" data-id=${item.id}>Eliminar</span>
+            </div>
+            <div>
+                <!-- <i class="fas fa-chevron-up"></i> -->
+                <i class="fas fa-plus-square" data-id=${item.id}></i>
+                <p class="item-amount">${item.amount}</p>
+                <i class="fas fa-minus-square" data-id=${item.id}></i>
+            </div>`;
+        cartContent.appendChild(div);
+        // console.log(cartContent);
+    }
+    // Mostrando el carrito
+    showCart() {
+        cartOverlay.classList.add("transparentBcg");
+        cartDOM.classList.add("showCart");
     }
 }
 //Local storage
@@ -67,6 +136,13 @@ class Storage {
     // Guardando productos para la lista del carrito
     static saveProducts(products) {
         localStorage.setItem("products", JSON.stringify(products));
+    }
+    static getProduct(id) {
+        let products = JSON.parse(localStorage.getItem("products"));
+        return products.find(product => product.id === id);
+    }
+    static saveCart(cart) {
+        localStorage.setItem("cart", JSON.stringify(cart));
     }
 }
 
