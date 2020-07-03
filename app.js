@@ -130,6 +130,49 @@ class UI {
         cartOverlay.classList.add("transparentBcg");
         cartDOM.classList.add("showCart");
     }
+    // set up application
+    setupAPP() {
+        cart = Storage.getCart();
+        this.setCartValues(cart);
+        this.populateCart(cart);
+        cartBtn.addEventListener("click", this.showCart);
+        closeCartBtn.addEventListener("click", this.hideCart);
+    }
+    hideCart() {
+        cartOverlay.classList.remove("transparentBcg");
+        cartDOM.classList.remove("showCart");
+    }
+    populateCart(cart) {
+        cart.forEach(item => this.addCartItem(item));
+    }
+    cartLogic() {
+        // Se hace de esta forma (=>) para poder acceder a los métodos de la clase
+        clearCartBtn.addEventListener("click", () => this.clearCart());
+    }
+    clearCart() {
+        let cartItems = cart.map(item => item.id);
+        cartItems.forEach(id => this.removeItem(id));
+        console.log(cartContent.children);
+        while (cartContent.children.length > 0) {
+            cartContent.removeChild(cartContent.children[0]);
+        }
+        this.hideCart();
+    }
+    removeItem(id) {
+        //Actualizando el carrito
+        cart = cart.filter(item => item.id !== id);
+        // Actualizando los totales
+        this.setCartValues(cart);
+        Storage.saveCart(cart);
+        // Actualizando los botones de productos agregados
+        let button = this.getSingleButton(id);
+        button.disabled = false;
+        button.innerHTML = `
+        <i class="fas fa-shopping-cart"></i>Agregar al carrito`;
+    }
+    getSingleButton(id) {
+        return buttonsDOM.find(button => button.dataset.id === id);
+    }
 }
 //Local storage
 class Storage {
@@ -144,17 +187,23 @@ class Storage {
     static saveCart(cart) {
         localStorage.setItem("cart", JSON.stringify(cart));
     }
+    static getCart() {
+        return localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []
+    }
 }
 
 // Cargando los productos desde json
 document.addEventListener("DOMContentLoaded", () => {
     const ui = new UI();
     const products = new Products();
+    // SetUPP application
+    ui.setupAPP();
     // Obteniendo todos los productos del json
     products.getProducts().then(products => {
         ui.displayProducts(products);
         Storage.saveProducts(products);
     }).then(() => {
         ui.getBagButtons();
+        ui.cartLogic();
     });
 });
