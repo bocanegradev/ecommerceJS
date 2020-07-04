@@ -5,12 +5,12 @@
         "id": "1"
       },
       "fields": {
-        "title": "queen panel bed",
-        "price": 10.99,
+        "title": "Six pack Corona",
+        "price": 22000,
         "image": {
           "fields": {
             "file": {
-              "url": "./images/product-1.jpeg"
+              "url": "./images/sixpackcorona.webp"
             }
           }
         }
@@ -21,12 +21,12 @@
         "id": "2"
       },
       "fields": {
-        "title": "king panel bed",
-        "price": 12.99,
+        "title": "Six pack Póker",
+        "price": 13200,
         "image": {
           "fields": {
             "file": {
-              "url": "./images/product-2.jpeg"
+              "url": "./images/sixpackpoker.webp"
             }
           }
         }

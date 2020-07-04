@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:400,700");
+@import url("https://fonts.googleapis.com/css2?family=Lacquer");
 /*------------------------------Configuración básica */
 :root {
     /* Variables de control global */
@@ -69,6 +70,13 @@ body {
   }
   /* ----------------------------------- End of Navbar */
   /* --------------- Hero ---------------- */
+.img-banner-hero {
+  /* width:96px; */
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  background-image: url("https://img.icons8.com/emoji/48/000000/ok-hand-light-skin-tone.png");
+}
 .hero {
   min-height: calc(100vh - 60px);
   /* background: url("./images/hero-bcg.jpeg") center/cover no-repeat; */
@@ -90,6 +98,7 @@ body {
   /* text-transform: uppercase; */
   letter-spacing: var(--mainSpacing);
   margin-bottom: 3rem;
+  font-family: 'Lacquer', cursive;
 }
 .banner-btn {
   padding: 1rem 3rem;
@@ -118,7 +127,6 @@ body {
   /* font-size: 2.5rem; */
   font-size: 2rem;
   margin-bottom: 5rem;
-  text-transform: capitalize;
   letter-spacing: var(--mainSpacing);
 }
 /* All products goes here */

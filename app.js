@@ -102,7 +102,8 @@ class UI {
             tempTotal += item.price * item.amount;
             itemsTotal += item.amount;
         });
-        totalCartPrice = parseFloat(tempTotal.toFixed(2));
+        // totalCartPrice = parseFloat(tempTotal.toFixed(2));
+        totalCartPrice = parseFloat(tempTotal);
         cartTotal.innerText = totalCartPrice;
         // cartTotal.innerText = parseFloat(tempTotal.toFixed(2));
         cartItems.innerText = itemsTotal;
@@ -148,7 +149,7 @@ class UI {
         cart.forEach(product => {
             ms += `* ${product.title} x ${product.amount} unidades -> *apx* ${product.price * product.amount}.%0A`;
         });
-        ms += `%0ATOTAL APX*: ${totalCartPrice}`;
+        ms += `%0A*TOTAL APX: ${totalCartPrice}*`;
         alert(ms);
         ms = ms.split(" ").join("%20");
         window.open("https://api.whatsapp.com/send?phone=+573506854921&text=%20" + ms);
