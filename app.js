@@ -9,7 +9,8 @@ const cartItems = document.querySelector(".cart-items");
 const cartTotal = document.querySelector(".cart-total");
 const cartContent = document.querySelector(".cart-content");
 const productsDOM = document.querySelector(".products-center");
-
+const orderNowBtn = document.querySelector(".banner-btn-order");
+let totalCartPrice;
 //-------------------------------------------Carrito principal
 let cart = [];
 //--------------------------------------------Botones principales
@@ -101,7 +102,9 @@ class UI {
             tempTotal += item.price * item.amount;
             itemsTotal += item.amount;
         });
-        cartTotal.innerText = parseFloat(tempTotal.toFixed(2));
+        totalCartPrice = parseFloat(tempTotal.toFixed(2));
+        cartTotal.innerText = totalCartPrice;
+        // cartTotal.innerText = parseFloat(tempTotal.toFixed(2));
         cartItems.innerText = itemsTotal;
         // console.log(cartTotal, cartItems);
     }
@@ -137,6 +140,19 @@ class UI {
         this.populateCart(cart);
         cartBtn.addEventListener("click", this.showCart);
         closeCartBtn.addEventListener("click", this.hideCart);
+        orderNowBtn.addEventListener("click", this.orderNow);
+    }
+    orderNow() {
+        // console.log(cart[1].amount);
+        let ms = `--Test message--%0A%0A`;
+        cart.forEach(product => {
+            ms += `* ${product.title} x ${product.amount} unidades -> *apx* ${product.price * product.amount}.%0A`;
+        });
+        ms += `%0ATOTAL APX*: ${totalCartPrice}`;
+        alert(ms);
+        ms = ms.split(" ").join("%20");
+        window.open("https://api.whatsapp.com/send?phone=+573506854921&text=%20" + ms);
+        // return console.log('https://api.whatsapp.com/send?phone=' + number + '&text=%20' + message)
     }
     populateCart(cart) {
         cart.forEach(item => this.addCartItem(item));

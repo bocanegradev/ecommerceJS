@@ -9,6 +9,12 @@
   --mainGrey: #ececec;
   --mainSpacing: 0.1rem;
   --mainTransition: all 0.2s linear;
+/* Mine */
+  --mainBlack: #0A0A0A;
+  --mainBlue:#170946;
+  --mainOrange:#ff6600;
+  --mainYellow:#ffb545;
+  --mainWhite:#ebebeb;
 }
 * {
   margin: 0;
@@ -224,7 +230,6 @@ body {
     min-width: 450px;
   }
 }
-
 .close-cart {
   font-size: 1.7rem;
   cursor: pointer;
@@ -284,5 +289,38 @@ body {
   text-transform: capitalize;
   margin-bottom: 1rem;
 }
-
+/* Clear button */
+.clear-cart{
+  padding: 1rem 3rem;
+  text-transform: uppercase;
+  letter-spacing: var(--mainSpacing);
+  font-size: 1rem;
+  background: var(--mainBlue);
+  color: var(--mainWhite);
+  border: 1px solid var(--mainOrange);
+  transition: var(--mainTransition);
+  cursor: pointer;
+}
+.clear-cart:hover {
+  background: transparent;
+  /* color: var(--primaryColor); */
+  color:var(--mainBlack);
+}
+/* Order button */
+.banner-btn-order {
+  padding: 1rem 3rem;
+  text-transform: uppercase;
+  letter-spacing: var(--mainSpacing);
+  font-size: 1rem;
+  background: var(--mainOrange);
+  color: var(--mainBlack);
+  border: 1px solid var(--mainBlack);
+  transition: var(--mainTransition);
+  cursor: pointer;
+}
+.banner-btn-order:hover {
+  background: transparent;
+  /* color: var(--primaryColor); */
+  color:var(--mainBlack);
+}
 /* --------------- End of Cart ---------------- */
